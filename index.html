@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blowfish Encryption and Decryption</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      textarea {
+        width: 100%;
+        height: 100px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        cursor: pointer;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Blowfish Encryption and Decryption</h1>
+    </header>
+
+    <main>
+      <div>
+        <label for="plaintext">Plaintext:</label>
+        <textarea id="plaintext"></textarea>
+      </div>
+      <button onclick="encryptText()">Encrypt</button>
+      <button onclick="decryptText()">Decrypt</button>
+      <button onclick="saveToFile()">Save to File</button>
+      <p id="result"></p>
+    </main>
+
+    <script>
+      const apiUrl = "http://localhost:8080";
+
+      function encryptText() {
+        const plaintext = document.getElementById("plaintext").value;
+        fetch(apiUrl + "/encrypt", {
+          method: "POST",
+          body: plaintext,
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("result").textContent = "Encrypted Text: " + data;
+          })
+          .catch((error) => console.error(error));
+      }
+
+      function decryptText() {
+        const ciphertext = document.getElementById("plaintext").value;
+        fetch(apiUrl + "/decrypt", {
+          method: "POST",
+          body: ciphertext,
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById("result").textContent = "Decrypted Text: " + data;
+          })
+          .catch((error) => console.error(error));
+      }
+
+      function saveToFile() {
+        const result = document.getElementById("result").textContent;
+        fetch(apiUrl + "/saveToFile", {
+          method: "POST",
+          body: result,
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            alert(data); // Display a simple alert for demo purposes
+          })
+          .catch((error) => console.error(error));
+      }
+    </script>
+  </body>
+</html>
