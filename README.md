@@ -1,2 +1,5 @@
-# Tugas1-Kriptografi
-Repo code tugas pertama keamanan komputer/kriptografi
+# Tugas kelompok 
+
+## Nama anggota kelompok
+- Dimas anugerah pratama (212031)
+
